@@ -47,7 +47,7 @@ comparison against market prices. Both could be added later.
 
 - Budget vs actual comparison per category
 - Revenue and sales volume by product
-- Date range filter
+- Date range filter on both views
 - Market price benchmarking against reference prices
 
 ## Data model
