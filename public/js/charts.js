@@ -1,28 +1,34 @@
-// Fetch summary data and draw the three charts
+// Keep references so charts can be destroyed and redrawn on filter change
+let pieChart = null;
+let barChart = null;
+let lineChart = null;
 
-async function drawPieChart() {
-  const res = await fetch('/api/category-summary');
+function buildQuery(from, to) {
+  const params = [];
+  if (from) params.push('from=' + from);
+  if (to) params.push('to=' + to);
+  return params.length ? '?' + params.join('&') : '';
+}
+
+async function drawPieChart(query) {
+  const res = await fetch('/api/category-summary' + query);
   const data = await res.json();
 
-  new Chart(document.getElementById('pieChart'), {
+  if (pieChart) pieChart.destroy();
+  pieChart = new Chart(document.getElementById('pieChart'), {
     type: 'pie',
     data: {
       labels: data.map(d => d.category),
-      datasets: [{
-        data: data.map(d => Number(d.total))
-      }]
+      datasets: [{ data: data.map(d => Number(d.total)) }]
     }
   });
 }
 
-async function drawMonthlyCharts() {
-  const res = await fetch('/api/monthly-summary');
+async function drawMonthlyCharts(query) {
+  const res = await fetch('/api/monthly-summary' + query);
   const data = await res.json();
 
-  // Build a sorted list of unique months
   const months = [...new Set(data.map(d => d.month))].sort();
-
-  // Separate income and expense totals per month
   const income = months.map(m => {
     const row = data.find(d => d.month === m && d.type === 'income');
     return row ? Number(row.total) : 0;
@@ -32,8 +38,8 @@ async function drawMonthlyCharts() {
     return row ? Number(row.total) : 0;
   });
 
-  // Bar chart: income vs expenses
-  new Chart(document.getElementById('barChart'), {
+  if (barChart) barChart.destroy();
+  barChart = new Chart(document.getElementById('barChart'), {
     type: 'bar',
     data: {
       labels: months,
@@ -44,8 +50,8 @@ async function drawMonthlyCharts() {
     }
   });
 
-  // Line chart: expenses over time
-  new Chart(document.getElementById('lineChart'), {
+  if (lineChart) lineChart.destroy();
+  lineChart = new Chart(document.getElementById('lineChart'), {
     type: 'line',
     data: {
       labels: months,
@@ -56,5 +62,22 @@ async function drawMonthlyCharts() {
   });
 }
 
-drawPieChart();
-drawMonthlyCharts();
+function loadCharts(from, to) {
+  const query = buildQuery(from, to);
+  drawPieChart(query);
+  drawMonthlyCharts(query);
+}
+
+document.getElementById('applyFilter').addEventListener('click', () => {
+  const from = document.getElementById('fromDate').value;
+  const to = document.getElementById('toDate').value;
+  loadCharts(from, to);
+});
+
+document.getElementById('clearFilter').addEventListener('click', () => {
+  document.getElementById('fromDate').value = '';
+  document.getElementById('toDate').value = '';
+  loadCharts();
+});
+
+loadCharts();
