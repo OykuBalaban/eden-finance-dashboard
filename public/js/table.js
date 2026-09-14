@@ -1,6 +1,6 @@
 let dataTable = null;
 
-// Fetch transactions (optionally filtered by date) and load into DataTables
+// Fetch transactions 
 async function loadTable(from, to) {
   let url = '/api/transactions';
   const params = [];
@@ -20,7 +20,7 @@ async function loadTable(from, to) {
     Number(t.amount).toFixed(2)
   ]);
 
-  // Rebuild the table on each filter change
+ 
   if (dataTable) {
     dataTable.clear();
     dataTable.rows.add(rows);

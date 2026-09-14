@@ -7,7 +7,7 @@ const PORT = 3000;
 
 app.use(express.static('public'));
 
-// Build a WHERE clause from optional from/to date query params
+
 function dateFilter(req, params) {
   const clauses = [];
   if (req.query.from) {
@@ -21,7 +21,7 @@ function dateFilter(req, params) {
   return clauses.length ? 'WHERE ' + clauses.join(' AND ') : '';
 }
 
-// API: all transactions
+
 app.get('/api/transactions', async (req, res) => {
   try {
     const params = [];
@@ -43,7 +43,7 @@ app.get('/api/transactions', async (req, res) => {
   }
 });
 
-// API: expenses by category
+
 app.get('/api/category-summary', async (req, res) => {
   try {
     const params = [];

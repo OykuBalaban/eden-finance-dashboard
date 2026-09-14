@@ -57,11 +57,21 @@ See `docs/phase1/erd.pdf` for the entity relationship diagram.
 
 ## Setup
 
-Setup instructions will be added in the development phase.
+1. Install Node.js and PostgreSQL.
+2. Create the database:
+psql -U postgres -c "CREATE DATABASE eden_finance;"
+psql -U postgres -d eden_finance -f db/schema.sql
+psql -U postgres -d eden_finance -f db/seed.sql
+3. Copy `.env.example` to `.env` and fill in your database password.
+4. Install dependencies and start the server:
+npm install
+node src/server.js
+
+5. Open http://localhost:3000 in your browser.
 
 ## Project status
 
-Phase 1 (conception), in progress
+Phase 2 (development), in progress
 
 ## Author
 
