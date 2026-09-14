@@ -1,0 +1,29 @@
+{
+  "name": "eden-finance-dashboard",
+  "version": "1.0.0",
+  "description": "A web application that shows EDEN Bioworks' income and expenses in one place,\r as a table and as charts.",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OykuBalaban/eden-finance-dashboard.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/OykuBalaban/eden-finance-dashboard/issues"
+  },
+  "homepage": "https://github.com/OykuBalaban/eden-finance-dashboard#readme",
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "pg": "^8.23.0"
+  }
+}
