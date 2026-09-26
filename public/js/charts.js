@@ -61,11 +61,28 @@ async function drawMonthlyCharts(query) {
     }
   });
 }
+async function drawBudgetChart(query) {
+  const res = await fetch('/api/budget-vs-actual' + query);
+  const data = await res.json();
+
+  if (window.budgetChartRef) window.budgetChartRef.destroy();
+  window.budgetChartRef = new Chart(document.getElementById('budgetChart'), {
+    type: 'bar',
+    data: {
+      labels: data.map(d => d.category),
+      datasets: [
+        { label: 'Planned', data: data.map(d => Number(d.planned)) },
+        { label: 'Actual', data: data.map(d => Number(d.actual)) }
+      ]
+    }
+  });
+}
 
 function loadCharts(from, to) {
   const query = buildQuery(from, to);
   drawPieChart(query);
   drawMonthlyCharts(query);
+  drawBudgetChart(query);
 }
 
 document.getElementById('applyFilter').addEventListener('click', () => {

@@ -15,8 +15,9 @@ reports.
 
 There are two views. The transaction table lists every record and can be
 sorted, searched and filtered. The visualizer page turns the same data into
-charts: expenses by category, income against expenses per month, and spending
-over time. Filters run without a page reload.
+charts: expenses by category, income against expenses per month, spending
+over time, and budget against actual spending per category. Filters run
+without a page reload.
 
 This is a prototype built for a university project. It uses sample data, not
 live financial records. It does not connect to accounting or banking systems
@@ -39,15 +40,14 @@ comparison against market prices. Both could be added later.
 - Pie chart: expenses by category
 - Bar chart: monthly income vs expenses
 - Line chart: spending trend over time
+- Budget vs actual chart per category
+- Date range filter on both views, applied without a page reload (AJAX)
 - REST API serving JSON from a relational database
-- AJAX filtering without page reload
 - Responsive layout with navigation between the table and the visualizer
 
 **Planned extensions**
 
-- Budget vs actual comparison per category
 - Revenue and sales volume by product
-- Date range filter on both views
 - Market price benchmarking against reference prices
 
 ## Data model
@@ -58,23 +58,30 @@ See `docs/phase1/erd.pdf` for the entity relationship diagram.
 ## Setup
 
 1. Install Node.js and PostgreSQL.
-2. Create the database:
+
+2. Create the database and load the schema and sample data:
+
 psql -U postgres -c "CREATE DATABASE eden_finance;"
 psql -U postgres -d eden_finance -f db/schema.sql
 psql -U postgres -d eden_finance -f db/seed.sql
+
+
 3. Copy `.env.example` to `.env` and fill in your database password.
+
 4. Install dependencies and start the server:
+
 npm install
-node src/server.js
+npm start
+
 
 5. Open http://localhost:3000 in your browser.
 
 ## Project status
 
-Phase 2 (development), in progress
+Phase 3 (finalization)
 
 ## Author
 
 Öykü Balaban
 IU International University of Applied Sciences
-Project: Getting started in Web Programming
+Project: Getting started in Web Programming (DLBITPEWP01_E)

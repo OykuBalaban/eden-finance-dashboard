@@ -88,6 +88,30 @@ app.get('/api/monthly-summary', async (req, res) => {
   }
 });
 
+app.get('/api/budget-vs-actual', async (req, res) => {
+  try {
+    const result = await pool.query(`
+      SELECT
+        c.name AS category,
+        COALESCE(SUM(b.planned_amount), 0) AS planned,
+        COALESCE((
+          SELECT SUM(t.amount)
+          FROM transactions t
+          WHERE t.category_id = c.id
+        ), 0) AS actual
+      FROM categories c
+      LEFT JOIN budgets b ON b.category_id = c.id
+      WHERE c.type = 'expense'
+      GROUP BY c.id, c.name
+      HAVING COALESCE(SUM(b.planned_amount), 0) > 0
+      ORDER BY c.name
+    `);
+    res.json(result.rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Database query failed' });
+  }
+});
 
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
