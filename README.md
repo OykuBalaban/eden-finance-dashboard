@@ -69,10 +69,10 @@ psql -U postgres -d eden_finance -f db/seed.sql
 3. Copy `.env.example` to `.env` and fill in your database password.
 
 4. Install dependencies and start the server:
-
+```
 npm install
 npm start
-
+```
 
 5. Open http://localhost:3000 in your browser.
 
