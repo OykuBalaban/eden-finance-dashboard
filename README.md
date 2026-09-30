@@ -60,11 +60,11 @@ See `docs/phase1/erd.pdf` for the entity relationship diagram.
 1. Install Node.js and PostgreSQL.
 
 2. Create the database and load the schema and sample data:
-
+```
 psql -U postgres -c "CREATE DATABASE eden_finance;"
 psql -U postgres -d eden_finance -f db/schema.sql
 psql -U postgres -d eden_finance -f db/seed.sql
-
+```
 
 3. Copy `.env.example` to `.env` and fill in your database password.
 
